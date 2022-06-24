@@ -17,6 +17,20 @@
     "url": "https://github.com/ALW-N/MAJOR_PROJECT/issues"
   },
   "homepage": "https://github.com/ALW-N/MAJOR_PROJECT#readme",
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "@babel/register": "^7.9.0",
+    "babel-loader": "^8.1.0",
+    "buble": "^0.19.8",
+    "buble-loader": "^0.5.1",
+    "jsx-loader": "^0.13.2",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^5.1.2",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  },
   "dependencies": {
     "delay": "^5.0.0",
     "dotenv": "^16.0.1",

@@ -5,6 +5,10 @@ require('dotenv').config()
 const Mongo = require('./mongodb.js')
 var mongo = new Mongo();
 
+mongo.test().then(client=>{
+    client.db('katsu').collection('Stocks1').rename('Stocks',()=>{})
+})
+
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
