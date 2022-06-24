@@ -142,6 +142,8 @@ class Mongo{
 		})
 	}
 
+
+	//test-procedure for testing Mongo Connect and manupulating data and collections manually
 	async test(){
 		var self=this;
 		return new Promise(async(resolve, reject)=>{
