@@ -33,12 +33,18 @@ class Mongo{
 			await delay(500);
 	} 
 
-	getUsersTotalGuilds(UID){
+	addStock(itemName,itemCode, stocks, stockUnit, itemType){
+		return new Promise(async(resolve,reject)=>{
+			await this.awaitClient();
+			this.cleint.db("katsu").collection("stocks").insertOne({item_name:itemName,item_code:itemCode,stocks:stocks})
+		})
+	}
+
+	changeStocks(itemCode, stockValue){
 		return new Promise(async(resolve, reject)=>{
 			await this.awaitClient();
-			this.client.db("carrybot").collection("discord_users").distinct({UID:UID}).then(count=>{
-				resolve(count.length);
-				
+			this.client.db("katsu").collection("stocks").updateOne({item_code:itemCode},{stocks:stocks+stockValue}).then(dat=>{
+				resolve(dat);
 			})
 			.catch(err=>{
 				reject(err)

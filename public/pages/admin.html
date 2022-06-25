@@ -24,18 +24,20 @@ li a {
 
 li a:hover {
   background-color: #111;
+  border:none;
+  border-radius: 10px;
+  transition: .5s ease-in-out;
 }
 </style>
 </head>
 <body>
 
 <ul>
-  <li><a class="active" href="#home">Home</a></li>
-  <li><a href="#news">News</a></li>
-  <li><a href="#contact">Contact</a></li>
-  <li><a href="#about">About</a></li>
+  <li><a class="active" href="/admin/stocks">Stocks
+  </a></li>
+  <li><a href="/admin/sales">Sales</a></li>
 </ul>
-<div class="app"></div>
+<div id="app"></div>
 
 <script src="/bundle.js"></script>
 
