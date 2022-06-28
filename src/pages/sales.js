@@ -5,7 +5,7 @@ const { Link } = require('react-router-dom');
 class App extends Component {
   render() {
     return (
-    	<div  className="App">
+    	<div styles={{ textAlign: center}} className="App">
 
         Hello
             <button onCLick={goto('/admin/stocks')}>Stocks</button><br/>

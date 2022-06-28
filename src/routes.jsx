@@ -2,6 +2,8 @@ import React,{ Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 //import Test from './pages/Test';
 import Home from './pages/home';
+import Stocks from './pages/stocks';
+import Sales from './pages/sales';
 class App extends Component {
   render() {
     const App = () => (
@@ -9,9 +11,9 @@ class App extends Component {
         <Switch>
           <Switch>
             <Route exact path='/admin' component={Home}/>
-            <Route exact path='/admin/stocks' component={Home}/>
-            <Route exact path='/admin/sales' component={Home}/>
-            
+            <Route exact path='/admin/stocks' component={Stocks}/>
+            <Route exact path='/admin/sales' component={Sales}/>
+
             <Route exact path='**'>
               <Redirect to="/" />
             </Route>
@@ -26,4 +28,4 @@ class App extends Component {
     );
   }
 }
-export default App; 
+export default App;
