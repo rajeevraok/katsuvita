@@ -1,8 +1,9 @@
 const MongoClient = require('mongodb').MongoClient;
-const delay = require('delay')
+const delay = require('delay');
+const { resolve } = require('path');
 
 class Mongo{
-	
+
 	constructor(creds){
 		let self = this;
 		if(typeof(creds) == "object")
@@ -31,19 +32,112 @@ class Mongo{
 	async awaitClient(){
 		while(!this.client)
 			await delay(500);
-	} 
+	}
 
-	addStock(itemName,itemCode, stocks, stockUnit, itemType){
+	listSales(){
 		return new Promise(async(resolve,reject)=>{
 			await this.awaitClient();
-			this.cleint.db("katsu").collection("stocks").insertOne({item_name:itemName,item_code:itemCode,stocks:stocks})
+			this.client.db("katsu").collection('Sales').find().toArray().then(docs=>{
+				resolve(docs);
+			})
+		})
+	}
+
+	/*
+item_code
+order_id
+total_price_in_rs
+receipt_ID
+quantity
+quantity_unit
+purchaser_email
+purcahser_name
+
+	*/
+
+	addOrder(itemCode,itemName, orderID, totalPriceInRs, receiptID, quantity,quantityUnit, purchaserEmail, purchaserName){
+		return new Promise(async(resolve,reject)=>{
+			await this.awaitClient();
+			this.client.db("katsu").collection("Stocks").insertOne({
+				item_code: itemCode,
+				item_name:itemName,
+				order_id: orderID,
+				total_price_in_rs: totalPriceInRs,
+				receipt_ID: receiptID,
+				quantity,
+				quantity_unit:quantityUnit,
+				purchaser_email:purchaserEmail,
+				purchaser_name:purchaserName
+			}).then(()=>{
+				resolve();
+			})
+		})
+	}
+
+	deleteOrder(orderID){
+		return new Promise(async(resolve,reject)=>{
+			await this.awaitClient();
+			this.client.db('katsu').collection('Sales').deleteOne({order_id:orderID}).then(()=>{
+				resolve();
+			})
+		})
+	}
+
+	listStocks(){
+		return new Promise(async(resolve,reject)=>{
+			await this.awaitClient();
+			this.client.db("katsu").collection('Stocks').find().toArray().then(docs=>{
+				resolve(docs);
+			})
+		})
+	}
+
+	addItem(itemName,itemCode, stocks, stockUnit, itemType){
+		return new Promise(async(resolve,reject)=>{
+			await this.awaitClient();
+			this.client.db("katsu").collection("Stocks").insertOne({item_name:itemName,item_code:itemCode,stocks:stocks,stock_unit:stockUnit,item_type:itemType}).then(()=>{
+				resolve();
+			})
+		})
+	}
+
+	deleteItem(itemCode){
+		return new Promise(async(resolve,reject)=>{
+			await this.awaitClient();
+			this.client.db('katsu').collection('Stocks').deleteOne({item_code:itemCode}).then(()=>{
+				resolve();
+			})
+		})
+	}
+
+	changeStockName(itemCode, itemName){
+		return new Promise(async(resolve, reject)=>{
+			await this.awaitClient();
+			this.client.db("katsu").collection("Stocks").updateOne({item_code:itemCode},{item_name:itemName}).then(dat=>{
+				resolve(dat);
+			})
+			.catch(err=>{
+				reject(err)
+			})
 		})
 	}
 
 	changeStocks(itemCode, stockValue){
 		return new Promise(async(resolve, reject)=>{
 			await this.awaitClient();
-			this.client.db("katsu").collection("stocks").updateOne({item_code:itemCode},{stocks:stocks+stockValue}).then(dat=>{
+			this.client.db("katsu").collection("Stocks").updateOne({item_code:itemCode},{stocks:stocks+stockValue}).then(dat=>{
+				resolve(dat);
+			})
+			.catch(err=>{
+				reject(err)
+			})
+		})
+	}
+
+	changeStockType(itemCode, stockType){
+		return new Promise(async(resolve, reject)=>{
+			await this.awaitClient();
+			this.client.db("katsu").collection("Stocks").updateOne({item_code:itemCode},{item_type:stockType}).then(dat=>{
 				resolve(dat);
 			})
 			.catch(err=>{
@@ -70,7 +164,7 @@ class Mongo{
 				if(err.code==404)
 					this.client.db("carrybot").collection("discord_users").insertOne({UID:UID,GID:GID,points:point})
 			})
-			
+
 		})
 	}
 
@@ -110,10 +204,10 @@ class Mongo{
 				if(err.code==404)
 					this.client.db("carrybot").collection("discord_users").insertOne({UID:UID,GID:GID,points:point})
 			})
-			
+
 		})
 	}
-	
+
 	getUser(UID, GID){ //UID- User ID, GID - Guild ID
 		return new Promise(async(resolve,reject)=>{
 			await this.awaitClient();
@@ -124,14 +218,14 @@ class Mongo{
 				else{
 					var e = new Error("Document of Specified User with Guild does not Exist")
 					e.code = 404
-					
+
 					reject(e)
 					//Identify this error with .catch(err=>if(err.code==404)//things)
 				}
 			})
 			.catch(err=>{
 				reject(err)
-			
+
 			})
 		})
 	}
@@ -158,7 +252,7 @@ class Mongo{
 		})
 	}
 
-	
+
 }
 
 module.exports = Mongo;

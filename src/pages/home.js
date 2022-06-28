@@ -5,11 +5,9 @@ const { Link } = require('react-router-dom');
 class App extends Component {
   render() {
     return (
-    	<div  className="App">
-
-        Hello
-            <button onCLick={goto('/admin/stocks')}>Stocks</button><br/>
-            <button onCLick={goto('/admin/sales')}>Sales</button><br/>
+    	<div className="App">
+            <button>Sales</button>
+            <button>Stocks</button>
     	</div>
     );
   }

@@ -9,15 +9,17 @@ class App extends Component {
     const App = () => (
       <div>
         <Switch>
-          <Switch>
-            <Route exact path='/admin' component={Home}/>
+
+            <Route exact path='/admin' >
+              <Redirect to="/admin/stocks"/>
+            </Route>
             <Route exact path='/admin/stocks' component={Stocks}/>
-            <Route exact path='/admin/sales' component={Sales}/>
+            {/* <Route exact path='/admin/sales' component={Sales}/> */}
 
             <Route exact path='**'>
               <Redirect to="/" />
             </Route>
-          </Switch>
+
         </Switch>
       </div>
     )

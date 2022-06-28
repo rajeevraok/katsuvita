@@ -16,7 +16,14 @@ module.exports = {
         test: /\.(js|jsx)$/,
         include: path.join(__dirname, 'src'),
         loader: 'babel-loader'
-      }
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
+      },
     ]
   }
 };
