@@ -2,7 +2,7 @@ const React = require('react');
 const { Component } = require('react');
 const { Link } = require('react-router-dom');
 const axios = require('axios');
-require('./stocks.css')
+require('./admin.css')
 
 class App extends Component {
 
@@ -45,19 +45,20 @@ class App extends Component {
 
   render() {
       let list = this.state.list;
-      function itemName(){
-        console.log("touching")
-      }
       return (
           <div className="App">
               <table cellSpacing={10}>
                 <thead>
                 <tr>
+                  <th>Order ID</th>
                   <th>Item Code</th>
                   <th>Item Name</th>
-                  <th>Stocks</th>
-                  <th>Stock Unit</th>
-                  <th>Item Type</th>
+                  <th>Total Price in RS</th>
+                  <th>Receipt ID</th>
+                  <th>Quantity</th>
+                  <th>Quantity Unit</th>
+                  <th>Purchaser Name</th>
+                  <th>Purchaser Email</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -65,6 +66,7 @@ class App extends Component {
 
                   	/*
                     item_code
+                    item_name
                     order_id
                     total_price_in_rs
                     receipt_ID
@@ -76,11 +78,15 @@ class App extends Component {
                     */
                   list.map((item,index)=>{
                     return <tr data-key = {JSON.stringify(item.order_id)} key = { index }>
-                      <td style={{textAlign:'center'}}>{item.item_code}</td>
+                      <td>{item.order_id}</td>
+                      <td style={{textAlign:'center'}}><input type="number" onChange={(e)=>this.onItemIDChange(e)} defaultValue={item.item_code}/></td>
                       <td style={{textAlign:'center'}}><input onChange={(e)=>this.onItemNameChange(e)} defaultValue={item.item_name}/></td>
-                      <td style={{textAlign:'center'}}><input type="number" onChange={(e)=>this.onStocksChange(e)} defaultValue={item.stocks}/></td>
-                      <td style={{textAlign:'center'}}><input onChange={(e)=>this.onStockUnitChange(e)} defaultValue={item.stock_unit}/></td>
-                      <td style={{textAlign:'center'}}><input onChange={(e)=>this.onItemTypeChange(e)} defaultValue={item.item_type}/></td>
+                      <td style={{textAlign:'center'}}><input type="number" onChange={(e)=>this.onRSChange(e)} defaultValue={item.total_price_in_rs}/></td>
+                      <td style={{textAlign:'center'}}><input type="number" onChange={(e)=>this.onreceiptIDChange(e)} defaultValue={item.receipt_ID}/></td>
+                      <td style={{textAlign:'center'}}><input type="number" onChange={(e)=>this.onQuantityChange(e)} defaultValue={item.quantity}/></td>
+                      <td style={{textAlign:'center'}}><input onChange={(e)=>this.onQuantityUnitChange(e)} defaultValue={item.quantity_unit}/></td>
+                      <td style={{textAlign:'center'}}><input onChange={(e)=>this.onPurchaserNameChange(e)} defaultValue={item.purchaser_name}/></td>
+                      <td style={{textAlign:'center'}}><input type="email" onChange={(e)=>this.onPurchaserEmailChange(e)} defaultValue={item.purchaser_email}/></td>
                     </tr>
                   })
                 }

@@ -92,10 +92,10 @@ purcahser_name
 		})
 	}
 
-	addItem(itemName,itemCode, stocks, stockUnit, itemType){
+	addItem(itemName,itemCode, stocks, stockUnit, pricePerUnit, itemType){
 		return new Promise(async(resolve,reject)=>{
 			await this.awaitClient();
-			this.client.db("katsu").collection("Stocks").insertOne({item_name:itemName,item_code:itemCode,stocks:stocks,stock_unit:stockUnit,item_type:itemType}).then(()=>{
+			this.client.db("katsu").collection("Stocks").insertOne({item_name:itemName,item_code:itemCode,stocks:stocks,stock_unit:stockUnit,item_type:itemType,price_per_unit:pricePerUnit}).then(()=>{
 				resolve();
 			})
 		})
@@ -135,6 +135,18 @@ purcahser_name
 	}
 
 	changeStockType(itemCode, stockType){
+		return new Promise(async(resolve, reject)=>{
+			await this.awaitClient();
+			this.client.db("katsu").collection("Stocks").updateOne({item_code:itemCode},{item_type:stockType}).then(dat=>{
+				resolve(dat);
+			})
+			.catch(err=>{
+				reject(err)
+			})
+		})
+	}
+
+	changePricePerUnit(itemCode, pricePerUnit){
 		return new Promise(async(resolve, reject)=>{
 			await this.awaitClient();
 			this.client.db("katsu").collection("Stocks").updateOne({item_code:itemCode},{item_type:stockType}).then(dat=>{

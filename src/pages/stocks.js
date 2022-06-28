@@ -2,7 +2,7 @@ const React = require('react');
 const { Component } = require('react');
 const { Link } = require('react-router-dom');
 const axios = require('axios');
-require('./stocks.css')
+require('./admin.css')
 
 class App extends Component {
 
@@ -57,6 +57,7 @@ class App extends Component {
                   <th>Item Name</th>
                   <th>Stocks</th>
                   <th>Stock Unit</th>
+                  <th>Price Per Unit</th>
                   <th>Item Type</th>
                 </tr>
                 </thead>
@@ -68,6 +69,7 @@ class App extends Component {
                       <td style={{textAlign:'center'}}><input onChange={(e)=>this.onItemNameChange(e)} defaultValue={item.item_name}/></td>
                       <td style={{textAlign:'center'}}><input type="number" onChange={(e)=>this.onStocksChange(e)} defaultValue={item.stocks}/></td>
                       <td style={{textAlign:'center'}}><input onChange={(e)=>this.onStockUnitChange(e)} defaultValue={item.stock_unit}/></td>
+                      <td style={{textAlign:'center'}}><input type="number" onChange={(e)=>this.onPricePerUnitChange(e)} defaultValue={item.price_per_unit}/></td>
                       <td style={{textAlign:'center'}}><input onChange={(e)=>this.onItemTypeChange(e)} defaultValue={item.item_type}/></td>
                     </tr>
                   })

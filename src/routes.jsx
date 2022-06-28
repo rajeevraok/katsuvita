@@ -14,7 +14,7 @@ class App extends Component {
               <Redirect to="/admin/stocks"/>
             </Route>
             <Route exact path='/admin/stocks' component={Stocks}/>
-            {/* <Route exact path='/admin/sales' component={Sales}/> */}
+            <Route exact path='/admin/sales' component={Sales}/>
 
             <Route exact path='**'>
               <Redirect to="/" />

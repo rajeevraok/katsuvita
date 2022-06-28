@@ -54,15 +54,29 @@ app.get('/api/stocks/list',(req,res)=>{
 })
 
 app.get('/api/stocks/add',(req,res)=>{
-	let { itemName, itemCode, stocks, stockUnit, itemType } = req.query;
-	console.log(itemName, itemCode, stocks, stockUnit, itemType)
-	if(!(itemName || itemCode || stocks || stockUnit || itemType)){
+	let { itemName, itemCode, stocks, stockUnit,pricePerUnit, itemType } = req.query;
+	console.log(itemName, itemCode, stocks, stockUnit, pricePerUnit, itemType)
+	if(!(itemName || itemCode || stocks || stockUnit || pricePerUnit || itemType)){
 		res.status(204);
 		res.end();
 		return;
 	}
-	mongo.addStock(itemName, itemCode, stocks, stockUnit, itemType).then(()=>{
+	mongo.addStock(itemName, itemCode, stocks, stockUnit, pricePerUnit, itemType).then(()=>{
 		res.status(200);
+		res.end();
+	})
+})
+
+app.get('/api/stocks/delete',(req, res)=>{
+	let {itemCode} = req.query;
+	mongo.deleteItem(itemCode).then(()=>{
+		res.end();
+	})
+})
+
+app.get('/api/sales/delete',(req, res)=>{
+	let {orderID} = req.query;
+	mongo.deleteOrder(orderID).then(()=>{
 		res.end();
 	})
 })
