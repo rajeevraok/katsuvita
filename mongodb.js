@@ -1,5 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
-const delay = require('delay')
+const delay = require('delay');
+const { resolve } = require('path');
 
 class Mongo{
 	
@@ -33,17 +34,61 @@ class Mongo{
 			await delay(500);
 	} 
 
+	listStocks(){
+		return new Promise(async(resolve,reject)=>{
+			await this.awaitClient();
+			this.client.db("katsu").collection('Stocks').find().toArray().then(docs=>{
+				resolve(docs);
+			})
+		})
+	}
+
 	addStock(itemName,itemCode, stocks, stockUnit, itemType){
 		return new Promise(async(resolve,reject)=>{
 			await this.awaitClient();
-			this.cleint.db("katsu").collection("stocks").insertOne({item_name:itemName,item_code:itemCode,stocks:stocks})
+			this.client.db("katsu").collection("Stocks").insertOne({item_name:itemName,item_code:itemCode,stocks:stocks,stock_unit:stockUnit,item_type:itemType}).then(()=>{
+				resolve();
+			})
+		})
+	}
+
+	deleteStock(itemCode){
+		return new Promise(async(resolve,reject)=>{
+			await this.awaitClient();
+			this.client.db('katsu').collection('Stocks').deleteOne({item_code:itemCode}).then(()=>{
+				resolve();
+			})
+		})
+	}
+
+	changeStockName(itemCode, itemName){
+		return new Promise(async(resolve, reject)=>{
+			await this.awaitClient();
+			this.client.db("katsu").collection("Stocks").updateOne({item_code:itemCode},{item_name:itemName}).then(dat=>{
+				resolve(dat);
+			})
+			.catch(err=>{
+				reject(err)
+			})
 		})
 	}
 
 	changeStocks(itemCode, stockValue){
 		return new Promise(async(resolve, reject)=>{
 			await this.awaitClient();
-			this.client.db("katsu").collection("stocks").updateOne({item_code:itemCode},{stocks:stocks+stockValue}).then(dat=>{
+			this.client.db("katsu").collection("Stocks").updateOne({item_code:itemCode},{stocks:stocks+stockValue}).then(dat=>{
+				resolve(dat);
+			})
+			.catch(err=>{
+				reject(err)
+			})
+		})
+	}
+
+	changeStockType(itemCode, stockType){
+		return new Promise(async(resolve, reject)=>{
+			await this.awaitClient();
+			this.client.db("katsu").collection("Stocks").updateOne({item_code:itemCode},{item_type:stockType}).then(dat=>{
 				resolve(dat);
 			})
 			.catch(err=>{
