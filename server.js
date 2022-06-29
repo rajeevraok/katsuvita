@@ -28,12 +28,10 @@ app.get('/admin/*',(req,res)=>{
 })
 
 app.get('/api/order/add',(req,res)=>{
-	console.log(req.query)
-	return;
 	let orderID = Math.floor((Math.random() * 100) + 1);
-	let { itemCode, totalPriceInRs, /* receiptID, */ quantity,quantityUnit, purchaserEmail, purchaserName } = req.query;
-	if((itemCode || orderID || totalPriceInRs /* || receiptID */ || quantity ||quantityUnit || purchaserEmail || purchaserName))
-		mongo.addSales(itemCode,orderID, totalPriceInRs, /* receiptID, */ quantity,quantityUnit, purchaserEmail, purchaserName).then(()=>{
+	let { itemName, totalPriceInRs, /* receiptID, */ quantity,quantityUnit, purchaserEmail, purchaserName } = req.query;
+	if((itemName || orderID || totalPriceInRs /* || receiptID */ || quantity ||quantityUnit || purchaserEmail || purchaserName))
+		mongo.addOrder(itemName,orderID, totalPriceInRs, /* receiptID, */ quantity,quantityUnit, purchaserEmail, purchaserName).then(()=>{
 			res.status(200)
 			res.end();
 		})
@@ -49,15 +47,15 @@ app.get("/api/order/approval",(req,res)=>{
 	approval = new Boolean(1);
 	else
 	approval = new Boolean(0);
-	console.log(approval)
 	mongo.orderApproval(orderID, approval).then(()=>{
 		res.status(200);
 		res.end();
 	})
 })
 
-app.get('api/order/delete',(req,res)=>{
+app.get('/api/order/delete',(req,res)=>{
 	let {orderID}= req.query;
+	console.log(orderID)
 	mongo.deleteOrder(orderID).then(()=>{
 		res.end();
 	})

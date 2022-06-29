@@ -55,11 +55,10 @@ purcahser_name
 
 	*/
 
-	addOrder(itemCode,itemName, orderID, totalPriceInRs,/*  receiptID, */ quantity,quantityUnit, purchaserEmail, purchaserName){
+	addOrder(itemName, orderID, totalPriceInRs,/*  receiptID, */ quantity,quantityUnit, purchaserEmail, purchaserName){
 		return new Promise(async(resolve,reject)=>{
 			await this.awaitClient();
 			this.client.db("katsu").collection("Sales").insertOne({
-				item_code: itemCode,
 				item_name:itemName,
 				order_id: orderID,
 				total_price_in_rs: totalPriceInRs,
@@ -78,7 +77,7 @@ purcahser_name
 	orderApproval(orderID,approval){
 		return new Promise(async(resolve,reject)=>{
 			await this.awaitClient();
-			console.log(orderID)
+			orderID=Number(orderID)
 			console.log(approval)
 			this.client.db('katsu').collection("Sales").findOneAndUpdate({"order_id":orderID},{"$set":{"active":true}}).then((doc)=>{
 				console.log(doc)
@@ -92,11 +91,15 @@ purcahser_name
 	deleteOrder(orderID){
 		return new Promise(async(resolve,reject)=>{
 			await this.awaitClient();
+			console.log("reach",orderID)
+			orderID = Number(orderID)
+
 			this.client.db('katsu').collection('Sales').deleteOne({order_id:orderID}).then(()=>{
 				resolve();
 			})
 		})
 	}
+
 
 	listStocks(){
 		return new Promise(async(resolve,reject)=>{

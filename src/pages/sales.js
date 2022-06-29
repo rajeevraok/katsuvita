@@ -48,6 +48,8 @@ class App extends Component {
 
 
   onApproval = (e,ele) => {
+    console.log(e)
+    return;
     let key = ele.target.parentNode.parentNode.dataset.key
     //this.forceUpdate();
     /* this.setState({list:{
@@ -55,8 +57,8 @@ class App extends Component {
         
     }}) */
     this.state.list[key-1].approval = !this.state.list[key-1].approval
-    console.log(this.state.list[key-1].approval)
-    axios.get(`/api/order/approval?orderID=${key}&approval=${this.state.list[key-1].approval}`)
+    //console.log(this.state.list[key-1].approval)
+    //axios.get(`/api/order/approval?orderID=${key}&approval=${this.state.list[key-1].approval}`)
     this.forceUpdate();
 
     //this.state.list[e].approval=!this.state.list[e].approval;
@@ -64,7 +66,9 @@ class App extends Component {
 
   onDelete = (e) => {
     console.log(e.target.parentNode.parentNode.parentNode.dataset.key)
-    axios.get(`/api/order/delete?orderID=${key}`)        
+    axios.get(`/api/order/delete?orderID=${e.target.parentNode.parentNode.parentNode.dataset.key}`).then(()=>{
+        this.forceUpdate();
+    })
   }
 
   render() {
