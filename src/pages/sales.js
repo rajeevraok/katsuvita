@@ -81,7 +81,7 @@ class App extends Component {
                 <thead>
                 <tr>
                   <th>Order ID</th>
-                  <th>Item Code</th>
+                  {/* <th>Item Code</th> */}
                   <th>Item Name</th>
                   <th>Total Price in RS</th>
                   {/* <th>Receipt ID</th> */}
@@ -114,7 +114,7 @@ class App extends Component {
                     }
                     return <tr data-key = {JSON.stringify(item.order_id)} key = { index }>
                       <td>{item.order_id}</td>
-                      <td>{item.item_code}</td>
+                      {/* <td>{item.item_code}</td> */}
                       <td> {item.item_name}</td>
                       <td> {item.total_price_in_rs}</td>
                       {/* <td> {item.receipt_ID}</td> */}

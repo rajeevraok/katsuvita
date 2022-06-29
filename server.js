@@ -28,7 +28,10 @@ app.get('/admin/*',(req,res)=>{
 })
 
 app.get('/api/order/add',(req,res)=>{
-	let { itemCode,orderID, totalPriceInRs, /* receiptID, */ quantity,quantityUnit, purchaserEmail, purchaserName } = req.query;
+	console.log(req.query)
+	return;
+	let orderID = Math.floor((Math.random() * 100) + 1);
+	let { itemCode, totalPriceInRs, /* receiptID, */ quantity,quantityUnit, purchaserEmail, purchaserName } = req.query;
 	if((itemCode || orderID || totalPriceInRs /* || receiptID */ || quantity ||quantityUnit || purchaserEmail || purchaserName))
 		mongo.addSales(itemCode,orderID, totalPriceInRs, /* receiptID, */ quantity,quantityUnit, purchaserEmail, purchaserName).then(()=>{
 			res.status(200)
