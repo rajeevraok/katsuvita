@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>KatsuVita-SoyaBeans</title>
+    <title>KatsuVita-Rice</title>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="../assets/img/favicon.png" />
@@ -36,18 +36,27 @@
           <div class="col-md-6 col-sm-12 no-padding">
               <!-- START CONTACT FROM -->
               <div class="contact-from">
-                  <form action="#" method="post" style="font-size : 100">
+                  <form action="/api/order/add" method="get" style="font-size : 100">
                       <div class="form-group col-md-6">
-                          <input type="text" name="name" class="form-control" id="name" placeholder="Enter Your Name" required pattern="[A-Za-z]{1,32}"/>
+                          <input type="text" required name="purchaserName" class="form-control" id="name" placeholder="Enter Your Name" required pattern="[A-Za-z]{1,32}"/>
                       </div> <br>
                       <div class="form-group col-md-6">
-                          <input type="email" name="email" class="form-control" id="email" placeholder="Enter Your Email" required />
+                          <input type="email" required name="purchaserEmail" class="form-control" id="email" placeholder="Enter Your Email" required />
+                      </div> <br>
+                      <div style="display:none" class="form-group col-md-12">
+                          <input type="text" required name="itemName" value="SoyaBean" class="form-control" id="subject" placeholder="Enter Your Purchase Item">
                       </div> <br>
                       <div class="form-group col-md-12">
-                          <input type="text" name="subject" class="form-control" id="subject" placeholder="Enter Your Purchase Item">
-                      </div> <br>
+                        <input type="number" required name="quantity" class="form-control" id="subject" placeholder="Enter Quantity">
+                    </div> <br>
+                    <div class="form-group col-md-12">
+                      <input type="text" required name="quantityUnit" class="form-control" id="subject" placeholder="Enter Quantity Unit">
+                  </div> <br>
+                  <div class="form-group col-md-12">
+                    <input type="number" required name="totalPriceInRs" class="form-control" id="subject" placeholder="Enter Quoted Price in RS">
+                </div> <br>
                       <div class="form-group col-md-12">
-                          <textarea rows="6" name="message" class="form-control" id="message" placeholder="Enter Your Quotation" required></textarea>
+                          <textarea rows="6" name="subject" class="form-control" id="message" placeholder="Enter Your Quotation" required></textarea>
                       </div> <br>
                       <div class="col-md-12">
                           <button>send information.</button>
