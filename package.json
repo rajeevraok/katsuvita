@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "main":"webpack && node server",
-    "start":"node server"
+    "main": "webpack && node server",
+    "start": "node server"
   },
   "repository": {
     "type": "git",
@@ -24,13 +24,17 @@
     "@babel/preset-env": "^7.9.5",
     "@babel/preset-react": "^7.9.4",
     "@babel/register": "^7.9.0",
+    "@material-ui/core": "^4.12.4",
     "babel-loader": "^8.1.0",
     "buble": "^0.19.8",
     "buble-loader": "^0.5.1",
     "css-loader": "^5.2.7",
+    "framework7-react": "^7.0.5",
     "jsx-loader": "^0.13.2",
+    "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^5.3.3",
+    "react-switch": "^7.0.0",
     "style-loader": "^2.0.0",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.12"

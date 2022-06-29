@@ -4,6 +4,16 @@ body {
     width: 100%;
 }
 
+.circle-div {
+    background-color: #04AA6D;
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    position: fixed;
+    bottom: 21px;
+    right: 25px;
+}
+
 td,th {
     border: 1px solid #ddd;
     padding: 8px;

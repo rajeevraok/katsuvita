@@ -27,10 +27,10 @@ app.get('/admin/*',(req,res)=>{
 	res.sendFile(__dirname+"/public/pages/admin.html")
 })
 
-app.get('/api/sales/add',(req,res)=>{
-	let { itemCode,orderID, totalPriceInRs, receiptID, quantity,quantityUnit, purchaserEmail, purchaserName } = req.query;
-	if((itemCode || orderID || totalPriceInRs || receiptID || quantity ||quantityUnit || purchaserEmail || purchaserName))
-		mongo.addSales(itemCode,orderID, totalPriceInRs, receiptID, quantity,quantityUnit, purchaserEmail, purchaserName).then(()=>{
+app.get('/api/order/add',(req,res)=>{
+	let { itemCode,orderID, totalPriceInRs, /* receiptID, */ quantity,quantityUnit, purchaserEmail, purchaserName } = req.query;
+	if((itemCode || orderID || totalPriceInRs /* || receiptID */ || quantity ||quantityUnit || purchaserEmail || purchaserName))
+		mongo.addSales(itemCode,orderID, totalPriceInRs, /* receiptID, */ quantity,quantityUnit, purchaserEmail, purchaserName).then(()=>{
 			res.status(200)
 			res.end();
 		})
@@ -38,6 +38,26 @@ app.get('/api/sales/add',(req,res)=>{
 		res.status(204);
 		res.end();
 	}
+})
+
+app.get("/api/order/approval",(req,res)=>{
+	let { orderID, approval } = req.query;
+	if(approval=="true")
+	approval = new Boolean(1);
+	else
+	approval = new Boolean(0);
+	console.log(approval)
+	mongo.orderApproval(orderID, approval).then(()=>{
+		res.status(200);
+		res.end();
+	})
+})
+
+app.get('api/order/delete',(req,res)=>{
+	let {orderID}= req.query;
+	mongo.deleteOrder(orderID).then(()=>{
+		res.end();
+	})
 })
 
 app.get('/api/sales/list',(req,res)=>{

@@ -55,21 +55,36 @@ purcahser_name
 
 	*/
 
-	addOrder(itemCode,itemName, orderID, totalPriceInRs, receiptID, quantity,quantityUnit, purchaserEmail, purchaserName){
+	addOrder(itemCode,itemName, orderID, totalPriceInRs,/*  receiptID, */ quantity,quantityUnit, purchaserEmail, purchaserName){
 		return new Promise(async(resolve,reject)=>{
 			await this.awaitClient();
-			this.client.db("katsu").collection("Stocks").insertOne({
+			this.client.db("katsu").collection("Sales").insertOne({
 				item_code: itemCode,
 				item_name:itemName,
 				order_id: orderID,
 				total_price_in_rs: totalPriceInRs,
-				receipt_ID: receiptID,
+				/* receipt_ID: receiptID, */
 				quantity,
 				quantity_unit:quantityUnit,
 				purchaser_email:purchaserEmail,
-				purchaser_name:purchaserName
+				purchaser_name:purchaserName,
+				approval:false
 			}).then(()=>{
 				resolve();
+			})
+		})
+	}
+
+	orderApproval(orderID,approval){
+		return new Promise(async(resolve,reject)=>{
+			await this.awaitClient();
+			console.log(orderID)
+			console.log(approval)
+			this.client.db('katsu').collection("Sales").findOneAndUpdate({"order_id":orderID},{"$set":{"active":true}}).then((doc)=>{
+				console.log(doc)
+				resolve();
+			}).catch(err=>{
+				console.log(err)
 			})
 		})
 	}
