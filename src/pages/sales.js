@@ -14,7 +14,10 @@ class App extends Component {
     this.state = {
       list:[]
     };
+    
   }
+
+ 
 
   componentDidMount(){
     axios.get('/api/sales/list').then((res)=>{
@@ -48,15 +51,19 @@ class App extends Component {
 
 
   onApproval = (e,ele) => {
-    console.log(e)
-    return;
+    console.log(ele.target.parentNode.parentNode.parentNode)
+    var child = ele.target.parentNode.parentNode
+    var parent = ele.target.parentNode.parentNode.parentNode;
+    // The equivalent of parent.children.indexOf(child)
+    var index = Array.prototype.indexOf.call(parent.children, child);
+    console.log(index)
     let key = ele.target.parentNode.parentNode.dataset.key
     //this.forceUpdate();
     /* this.setState({list:{
         ...this.state.list,
         
     }}) */
-    this.state.list[key-1].approval = !this.state.list[key-1].approval
+    this.state.list[index].approval = !this.state.list[index].approval
     //console.log(this.state.list[key-1].approval)
     //axios.get(`/api/order/approval?orderID=${key}&approval=${this.state.list[key-1].approval}`)
     this.forceUpdate();
@@ -81,6 +88,7 @@ class App extends Component {
       let list = this.state.list;
       return (
           <div className="App">
+            
               <table cellSpacing={10}>
                 <thead>
                 <tr>

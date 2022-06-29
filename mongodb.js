@@ -122,16 +122,20 @@ purcahser_name
 	deleteItem(itemCode){
 		return new Promise(async(resolve,reject)=>{
 			await this.awaitClient();
+			itemCode = Number(itemCode)
 			this.client.db('katsu').collection('Stocks').deleteOne({item_code:itemCode}).then(()=>{
 				resolve();
 			})
 		})
 	}
 
+	
+
 	changeStockName(itemCode, itemName){
 		return new Promise(async(resolve, reject)=>{
 			await this.awaitClient();
-			this.client.db("katsu").collection("Stocks").updateOne({item_code:itemCode},{item_name:itemName}).then(dat=>{
+			itemCode = Number(itemCode)
+			this.client.db("katsu").collection("Stocks").updateOne({item_code:itemCode},{"$set":{item_name:itemName}}).then(dat=>{
 				resolve(dat);
 			})
 			.catch(err=>{
@@ -143,7 +147,9 @@ purcahser_name
 	changeStocks(itemCode, stockValue){
 		return new Promise(async(resolve, reject)=>{
 			await this.awaitClient();
-			this.client.db("katsu").collection("Stocks").updateOne({item_code:itemCode},{stocks:stocks+stockValue}).then(dat=>{
+			itemCode = Number(itemCode)
+			stockValue = Number(stockValue);
+			this.client.db("katsu").collection("Stocks").updateOne({item_code:itemCode},{$set:{stocks:stockValue}}).then(dat=>{
 				resolve(dat);
 			})
 			.catch(err=>{
@@ -155,7 +161,8 @@ purcahser_name
 	changeStockType(itemCode, stockType){
 		return new Promise(async(resolve, reject)=>{
 			await this.awaitClient();
-			this.client.db("katsu").collection("Stocks").updateOne({item_code:itemCode},{item_type:stockType}).then(dat=>{
+			itemCode = Number(itemCode)
+			this.client.db("katsu").collection("Stocks").updateOne({item_code:itemCode},{$set:{item_type:stockType}}).then(dat=>{
 				resolve(dat);
 			})
 			.catch(err=>{
@@ -167,7 +174,9 @@ purcahser_name
 	changePricePerUnit(itemCode, pricePerUnit){
 		return new Promise(async(resolve, reject)=>{
 			await this.awaitClient();
-			this.client.db("katsu").collection("Stocks").updateOne({item_code:itemCode},{item_type:stockType}).then(dat=>{
+			itemCode = Number(itemCode)
+			pricePerUnit = Number(pricePerUnit);
+			this.client.db("katsu").collection("Stocks").updateOne({item_code:itemCode},{$set:{price_per_unit:pricePerUnit}}).then(dat=>{
 				resolve(dat);
 			})
 			.catch(err=>{

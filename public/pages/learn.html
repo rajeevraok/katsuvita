@@ -6,23 +6,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Login Panel</title>
   <link rel="shortcut icon" type="image/png" href="../public/assets/img/favicon.png" />
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
   <div class="container">
     <div class="myform">
-      <form>
+      <form id="form">
         <h2>ADMIN LOGIN</h2>
-        <input type="text" placeholder="Admin Name">
-        <input type="password" placeholder="Password">
+        <input id="pass" type="password" placeholder="Password">
         <button type="submit">LOGIN</button>
       </form>
     </div>
     <div class="image">
-      <img src="image.jpg">
+      <img src="/image.jpg">
     </div>
   </div>
+
+  <script>
+    
+    document.getElementById("form").onsubmit=(e)=>{
+      e.preventDefault();
+      if(document.getElementById('pass').value=="password"){
+        window.location.assign("/admin/stocks")
+      }
+    }
+  </script>
 
 </body>
 </html>

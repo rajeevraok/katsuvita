@@ -20,8 +20,13 @@ app.get('/',(req,res)=>{
 })
 
 app.get('/admin',(req,res)=>{
-	res.sendFile(__dirname+"/public/pages/admin.html")
+	res.sendFile(__dirname+"/public/pages/learn.html")
 })
+
+app.get('/orderconfirm',(req,res)=>{
+	res.sendFile(__dirname+"/orderConfirm.html")
+})
+
 
 app.get('/admin/*',(req,res)=>{
 	res.sendFile(__dirname+"/public/pages/admin.html")
@@ -39,6 +44,7 @@ app.get('/api/order/add',(req,res)=>{
 		res.status(204);
 		res.end();
 	}
+	res.redirect("/orderconfirm")
 })
 
 app.get("/api/order/approval",(req,res)=>{
@@ -92,6 +98,32 @@ app.get('/api/stocks/delete',(req, res)=>{
 	let {itemCode} = req.query;
 	mongo.deleteItem(itemCode).then(()=>{
 		res.end();
+	})
+})
+
+app.get('/api/stocks/change/name',(req,res)=>{
+	let {itemCode,itemName} = req.query;
+	mongo.changeStockName(itemCode,itemName).then(()=>{
+		res.sendStatus(200);
+	})
+})
+app.get('/api/stocks/change/stocks',(req,res)=>{
+	let {itemCode,stocks} = req.query;
+	mongo.changeStocks(itemCode,stocks).then(()=>{
+		res.redirect('/admin/stocks');
+	})
+})
+app.get('/api/stocks/change/ppu',(req,res)=>{
+	let {itemCode,pricePerUnit} = req.query;
+	console.log(pricePerUnit)
+	mongo.changePricePerUnit(itemCode,pricePerUnit).then(()=>{
+		res.redirect('/admin/stocks');
+	})
+})
+app.get('/api/stocks/change/itemtype',(req,res)=>{
+	let {itemCode,itemType} = req.query;
+	mongo.changeStockType(itemCode,itemType).then(()=>{
+		res.redirect('/admin/stocks');
 	})
 })
 
