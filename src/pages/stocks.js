@@ -2,7 +2,7 @@ const React = require('react');
 const { Component } = require('react');
 const { Link } = require('react-router-dom');
 const axios = require('axios');
-require('./admin.css')
+require('./admin.css');
 
 class App extends Component {
 
@@ -40,16 +40,20 @@ class App extends Component {
   onItemTypeChange(e){
     //console.log(e.target.value)
     console.log(e.target.parentNode.parentNode.dataset.key)
+  }
 
+  onDelete(e){
+    console.log(e.target.parentNode.parentNode.dataset.key)
   }
 
   render() {
       let list = this.state.list;
-      function itemName(){
-        console.log("touching")
-      }
+      
       return (
           <div className="App">
+            <button class="circle-div"><span class="material-symbols-outlined">
+add
+</span></button>
               <table cellSpacing={10}>
                 <thead>
                 <tr>
@@ -59,6 +63,7 @@ class App extends Component {
                   <th>Stock Unit</th>
                   <th>Price Per Unit</th>
                   <th>Item Type</th>
+                  <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -71,6 +76,7 @@ class App extends Component {
                       <td style={{textAlign:'center'}}><input onChange={(e)=>this.onStockUnitChange(e)} defaultValue={item.stock_unit}/></td>
                       <td style={{textAlign:'center'}}><input type="number" onChange={(e)=>this.onPricePerUnitChange(e)} defaultValue={item.price_per_unit}/></td>
                       <td style={{textAlign:'center'}}><input onChange={(e)=>this.onItemTypeChange(e)} defaultValue={item.item_type}/></td>
+                      <td><button onClick={e=>this.onDelete(e)}><span className="material-symbols-outlined">delete</span></button></td>
                     </tr>
                   })
                 }
